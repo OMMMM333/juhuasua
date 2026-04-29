@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juhuasua | 數位票券交易平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --brand-orange: #FF5722; --brand-dark: #020617; }
+        body { background-color: #020617; color: #f8fafc; font-family: 'PingFang TC', sans-serif; }
+
+        /* 1. 卡片微動效 (Hover Depth) */
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #0f172a; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .product-card:hover { transform: translateY(-10px); border-color: var(--brand-orange); }
+
+        /* 2. 按鈕懸停反轉 */
+        .btn-buy { transition: all 0.3s; }
+        .btn-buy:hover { background-color: white !important; color: black !important; }
+
+        /* 3. 多級菜單 */
+        .dropdown:hover .dropdown-menu { display: block; }
+
+        /* 4. 跑馬燈 (速度加快) */
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .marquee-track { display: flex; width: max-content; animation: scroll 20s linear infinite; }
+
+        /* 5. 搶購中閃爍 */
+        .animate-blink { animation: blink 1.2s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* 6. 客服懸浮球 */
+        .floating-chat {
+            position: fixed; bottom: 30px; right: 30px; z-index: 100;
+            width: 60px; height: 60px; background: var(--brand-orange);
+            border-radius: 50%; display: flex; items-center; justify-center;
+            cursor: pointer; box-shadow: 0 10px 30px rgba(255, 87, 34, 0.4);
+            transition: transform 0.3s;
+        }
+        .floating-chat:hover { transform: scale(1.1); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="sticky top-0 z-50 bg-[#020617]/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
+            <div class="text-2xl font-black text-orange-500 tracking-tighter">JUHUASUA</div>
+            
+            <div class="hidden lg:flex items-center space-x-10 text-[12px] font-bold tracking-widest text-slate-400 uppercase">
+                <a href="#" class="hover:text-white transition">首頁</a>
+                <a href="#" class="hover:text-white transition">軒軒企業</a>
+                <div class="relative dropdown group cursor-pointer py-2">
+                    <span class="hover:text-white flex items-center">商品目錄 <span class="ml-1 text-[8px]">▼</span></span>
+                    <div class="dropdown-menu hidden absolute top-full left-0 w-56 bg-slate-900 border border-white/10 rounded-2xl p-4 shadow-2xl">
+                        <a href="#" class="block px-4 py-3 hover:bg-white/5 hover:text-orange-500 rounded-xl transition">🏪 超商系列</a>
+                        <a href="#" class="block px-4 py-3 hover:bg-white/5 hover:text-orange-500 rounded-xl transition">🥩 王品集團</a>
+                        <a href="#" class="block px-4 py-3 hover:bg-white/5 hover:text-orange-500 rounded-xl transition">🛒 家樂福專區</a>
+                        <a href="#" class="block px-4 py-3 hover:bg-white/5 hover:text-orange-500 rounded-xl transition">🏢 遠東 SOGO</a>
+                    </div>
+                </div>
+                <div class="relative dropdown group cursor-pointer py-2">
+                    <span class="hover:text-white flex items-center">常見問題 <span class="ml-1 text-[8px]">▼</span></span>
+                    <div class="dropdown-menu hidden absolute top-full left-0 w-56 bg-slate-900 border border-white/10 rounded-2xl p-4 shadow-2xl">
+                        <a href="#" class="block px-4 py-3 hover:bg-white/5 hover:text-orange-500 rounded-xl transition font-black text-cyan-400">🎓 3分鐘新手教學</a>
+                        <a href="#" class="block px-4 py-3 hover:bg-white/5 hover:text-white rounded-xl transition">🎫 票券如何兌換？</a>
+                        <a href="#" class="block px-4 py-3 hover:bg-white/5 hover:text-white rounded-xl transition">🛡️ 交易安全保障</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <button class="text-slate-400 hover:text-white transition opacity-50">🔍</button>
+                <div class="relative cursor-pointer text-xl">🛒<span class="absolute -top-2 -right-2 bg-orange-500 text-[9px] px-1.5 py-0.5 rounded-full text-white">2</span></div>
+                <a href="#" class="text-[11px] font-bold text-slate-400 hover:text-white">註冊</a>
+                <a href="#" class="bg-orange-500 text-white px-6 py-2 rounded-full text-[11px] font-black hover:bg-orange-400 transition">登入</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-24 text-center px-6">
+        <h1 class="text-7xl md:text-9xl font-black text-white tracking-tighter">聚划算</h1>
+        <h2 class="text-4xl md:text-7xl font-black text-orange-500 mt-2 tracking-tighter">讓省錢變得極度舒適</h2>
+        <p class="text-slate-500 font-bold mt-10 tracking-[0.2em] text-sm md:text-base max-w-2xl mx-auto">
+            不管是家樂福、7-11 還是美廉社，這裡幫你找回票券該有的價值。
+        </p>
+        
+        <div class="max-w-2xl mx-auto mt-16">
+            <div class="flex items-center bg-slate-900/50 border border-slate-700 rounded-full p-2 group focus-within:border-orange-500 transition">
+                <input type="text" placeholder="搜尋折扣票券..." class="w-full bg-transparent px-10 text-lg focus:outline-none">
+                <button class="bg-orange-500 text-white px-12 py-4 rounded-full font-black text-sm hover:bg-orange-400">SEARCH</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-12 border-y border-white/5 overflow-hidden opacity-30">
+        <div class="marquee-track space-x-24">
+            <div class="flex items-center gap-4"><img src="https://www.7-11.com.tw/favicon.ico" class="w-6 h-6 grayscale"> <span class="font-black">7-11 統一超商</span></div>
+            <div class="flex items-center gap-4"><img src="https://www.carrefour.com.tw/favicon.ico" class="w-6 h-6 grayscale"> <span class="font-black">CARREFOUR 家樂福</span></div>
+            <div class="flex items-center gap-4"><span class="text-2xl">🥩</span> <span class="font-black">TASTY 西堤牛排</span></div>
+            <div class="flex items-center gap-4"><img src="https://www.watsons.com.tw/favicon.ico" class="w-6 h-6 grayscale"> <span class="font-black">WATSONS 屈臣氏</span></div>
+            <div class="flex items-center gap-4"><img src="https://www.7-11.com.tw/favicon.ico" class="w-6 h-6 grayscale"> <span class="font-black">7-11 統一超商</span></div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-8 py-24">
+        <div class="flex justify-between items-end mb-16">
+            <div>
+                <h2 class="text-4xl font-black text-white italic">🔥 熱門商品券</h2>
+                <p class="text-cyan-400 font-black text-[10px] tracking-[0.4em] uppercase mt-2">TRENDING GIFT CARDS & VOUCHERS</p>
+            </div>
+            <a href="#" class="text-xs font-bold border-b border-cyan-400 text-cyan-400 pb-1 hover:text-white transition">VIEW ALL MARKET</a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="product-card p-8 rounded-[3rem] flex flex-col justify-between h-[450px]">
+                <div>
+                    <div class="flex justify-between items-start">
+                        <img src="https://www.7-11.com.tw/favicon.ico" class="w-14 h-14 rounded-2xl">
+                        <span class="text-[9px] font-bold text-green-400 bg-green-400/10 px-3 py-1 rounded-md border border-green-400/20">庫存充足</span>
+                    </div>
+                    <div class="mt-14">
+                        <h3 class="text-xl font-bold text-slate-300">數位商品禮券</h3>
+                        <p class="text-5xl font-black text-white mt-3">$500</p>
+                    </div>
+                </div>
+                <button class="btn-buy w-full py-5 bg-orange-500 text-white rounded-[1.5rem] font-black text-sm">立即購買</button>
+            </div>
+
+            <div class="product-card p-8 rounded-[3rem] flex flex-col justify-between h-[450px]">
+                <div>
+                    <div class="flex justify-between items-start">
+                        <img src="https://wordpress.org/favicon.ico" class="w-14 h-14 rounded-2xl bg-white p-2">
+                        <span class="text-[9px] font-bold text-orange-500 bg-orange-500/10 px-3 py-1 rounded-md border border-orange-500/20 animate-blink">🔥 搶購中</span>
+                    </div>
+                    <div class="mt-14">
+                        <h3 class="text-xl font-bold text-slate-300">提貨券 / 禮物卡</h3>
+                        <p class="text-5xl font-black text-white mt-3">$1,000</p>
+                    </div>
+                </div>
+                <button class="btn-buy w-full py-5 bg-white text-black rounded-[1.5rem] font-black text-sm">立即購買</button>
+            </div>
+
+            <div class="product-card p-8 rounded-[3rem] flex flex-col justify-between h-[450px]">
+                <div>
+                    <div class="flex justify-between items-start">
+                        <span class="text-4xl">🥩</span>
+                        <span class="text-[9px] font-bold text-orange-500 bg-orange-500/10 px-3 py-1 rounded-md border border-orange-500/20">🔥 倒數 3 組</span>
+                    </div>
+                    <div class="mt-14">
+                        <h3 class="text-xl font-bold text-slate-300">西堤餐飲券</h3>
+                        <p class="text-5xl font-black text-white mt-3">$668</p>
+                    </div>
+                </div>
+                <button class="btn-buy w-full py-5 bg-white text-black rounded-[1.5rem] font-black text-sm">立即購買</button>
+            </div>
+
+            <div class="product-card p-8 rounded-[3rem] flex flex-col justify-between h-[450px]">
+                <div>
+                    <div class="flex justify-between items-start">
+                        <img src="https://www.watsons.com.tw/favicon.ico" class="w-14 h-14 rounded-2xl">
+                        <span class="text-[9px] font-bold text-green-400 bg-green-400/10 px-3 py-1 rounded-md border border-green-400/20">庫存充足</span>
+                    </div>
+                    <div class="mt-14">
+                        <h3 class="text-xl font-bold text-slate-300">商品抵用券</h3>
+                        <p class="text-5xl font-black text-white mt-3">$200</p>
+                    </div>
+                </div>
+                <button class="btn-buy w-full py-5 bg-white text-black rounded-[1.5rem] font-black text-sm">立即購買</button>
+            </div>
+        </div>
+
+        <div class="mt-40 bg-gradient-to-br from-slate-900 to-black border border-white/5 rounded-[4rem] p-16 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-10 opacity-10 text-[10rem] font-black italic">FLASH</div>
+            <div class="flex flex-col md:flex-row items-center justify-between relative z-10">
+                <div class="text-center md:text-left">
+                    <h2 class="text-5xl font-black text-white italic tracking-tighter mb-4">⚡ 限時出清專區</h2>
+                    <p class="text-slate-500 font-bold text-lg max-w-md">每日 22:00 準時釋出，售完即止。這波不搶真的會虧。</p>
+                </div>
+                <div class="flex items-center gap-12 mt-10 md:mt-0">
+                    <div class="text-center bg-orange-500/10 p-6 rounded-3xl border border-orange-500/20">
+                        <p class="text-[11px] font-black text-orange-500 tracking-[0.3em] uppercase mb-1">Only Left</p>
+                        <p class="text-3xl font-black text-white">5 Sets</p>
+                    </div>
+                    <button class="bg-orange-500 text-white px-16 py-6 rounded-3xl font-black text-xl hover:bg-orange-400 transition shadow-2xl shadow-orange-500/20">進入搶購</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-24 bg-black border-t border-white/5">
+        <div class="flex justify-center items-center space-x-16 mb-16">
+            <a href="#" class="opacity-40 hover:opacity-100 transition"><img src="https://www.facebook.com/favicon.ico" class="w-8 h-8"></a>
+            <a href="#" class="opacity-40 hover:opacity-100 transition"><img src="https://www.instagram.com/favicon.ico" class="w-8 h-8"></a>
+            <a href="#" class="opacity-40 hover:opacity-100 transition"><img src="https://static.line-scdn.net/line_lp/img/favicon.ico" class="w-8 h-8"></a>
+        </div>
+        <p class="text-center text-[10px] text-slate-700 tracking-[0.5em] uppercase">© 2026 JUHUASUA DIGITAL. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <div class="floating-chat">
+        <span class="text-2xl">💬</span>
+    </div>
+
+</body>
+</html>
